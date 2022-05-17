@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
@@ -66,19 +65,19 @@ dependencies {
 
 
     def ktor_version = "2.0.0"
-    implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-android:$ktor_version"
-    implementation "io.ktor:ktor-client-serialization:$ktor_version"
     implementation "io.ktor:ktor-client-logging:$ktor_version"
-    implementation("io.ktor:ktor-client-apache:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
 
 
-    implementation "ch.qos.logback:logback-classic:1.2.6"
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    implementation "com.google.dagger:hilt-android:$hilt_verstion"
-    kapt "com.google.dagger:hilt-compiler:$hilt_verstion"
+
+
+
+
+    def koin_version = "3.2.0"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 
 
 
