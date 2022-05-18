@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 
-class UsersRepositoryImp  constructor(private val client: HttpClient) : UsersRepository {
+class UsersRepositoryImp constructor(private val client: HttpClient) : UsersRepository {
     override suspend fun getProducts(): Flow<Result<List<UserResponse>>> =
         flow<Result<List<UserResponse>>> {
             emit(Result.success(client.get { url(POST) }.body()))
@@ -18,4 +18,6 @@ class UsersRepositoryImp  constructor(private val client: HttpClient) : UsersRep
             emit(Result.failure(ex))
         }
 }
+
+
 

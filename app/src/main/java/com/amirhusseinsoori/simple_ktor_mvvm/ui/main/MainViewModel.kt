@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amirhusseinsoori.simple_ktor_mvvm.data.network.repository.UsersRepository
 import com.amirhusseinsoori.simple_ktor_mvvm.data.network.model.UserResponse
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.amirhusseinsoori.simple_ktor_mvvm.ui.handleEvent
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
@@ -21,18 +21,14 @@ class MainViewModel constructor(private val repository: UsersRepository) : ViewM
 
     private fun event() {
         viewModelScope.launch {
-            repository.getProducts().collect() { data ->
-                data.fold(onSuccess = { list ->
-                    mutableState.value = mutableState.value.copy(list = list)
-                }, onFailure = {
-                    mutableState.value = mutableState.value.copy(message = it.message ?: "")
-                })
-            }
-
+            repository.getProducts().handleEvent(loading = { loading ->
+                mutableState.value = mutableState.value.copy(isLoading = loading)
+            }, success = { value ->
+                mutableState.value = mutableState.value.copy(list = value)
+            }, failed = { message ->
+                mutableState.value = mutableState.value.copy(message = message ?: "")
+            })
         }
 
     }
 }
-
-
-data class MainState(val list: List<UserResponse> = emptyList(), val message: String = "")
